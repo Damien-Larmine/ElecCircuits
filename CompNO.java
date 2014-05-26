@@ -16,7 +16,7 @@ public class CompNO extends Component {
 		return (!this.in);
 	}
 
-	public void setInA(boolean valeur) {
+	public void setIn(boolean valeur) {
 		this.in = valeur;
 	}
 
