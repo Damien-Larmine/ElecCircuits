@@ -69,6 +69,9 @@ public class Fenetre extends JFrame implements Runnable {
 	    
 
 	    }
-                
+        public static void main(String[] args){
+        Fenetre fen = new Fenetre(); 
+		}
+  
 
 }
