@@ -1,36 +1,37 @@
 public class Component {
 
 	private String name;
-	private int ins;
-	private int outs;
+	private boolean inA;
+	private boolean inB;
 
-	public Component(String name, int ins, int outs) {
+	public Component(String name) {
 		this.name = name;
-		this.ins = ins;
-		this.outs = outs;
+		
+		this.inA = false;
+		this.inB = false;
 	}
 
 	public String getName() {
 		return this.name;
 	}
 
-	public int getIns() {
-		return this.ins;
+	public boolean getInA() {
+		return this.inA;
 	}
 
-	public int getOuts() {
-		return this.outs;
+	public boolean getInB() {
+		return this.inB;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setIns(int ins) {
-		this.ins = ins;
+	public void setInA(boolean a) {
+		this.inA = a;
 	}
 
-	public void setOuts(int outs) {
-		this.outs = outs;
+	public void setOuts(boolean b) {
+		this.inB = b;
 	}
 }
