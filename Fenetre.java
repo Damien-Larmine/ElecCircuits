@@ -1,4 +1,4 @@
-package simulation;
+//package simulation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,9 +29,9 @@ public class Fenetre extends JFrame implements Runnable {
 	 private JMenuBar menuBar = new JMenuBar();
 	    JMenu   fichier = new JMenu("Fichier"),
 	            aide = new JMenu("Aide"),
-	    		Composants = new JMenu("Composants") ;
+	    		composants = new JMenu("Composants") ;
 	    
-	    JMenuItem nouveau = new JMenuItem("Effacer"),
+	    JMenuItem nouveau = new JMenuItem("Nouveau"),
                 quitter = new JMenuItem("Quitter"),
                 charger = new JMenuItem("Charger"),
                 sauvegarder = new JMenuItem("Sauvegarder"),
@@ -39,20 +39,26 @@ public class Fenetre extends JFrame implements Runnable {
                 and = new JMenuItem("AND"),
                 or = new JMenuItem("OR"),
                 xor = new JMenuItem("XOR"),
-                no = new JMenuItem("NO");
+                no = new JMenuItem("NO"),
+                aideItem = new JMenuItem("Aide");
 	    
-	    /* Les écouteurs */ 
+	    /* Les Ã©couteurs */ 
 	    
-	    private Stoplistener sListener = new StopListener(); 
+	    //private Stoplistener sListener = new StopListener(); 
 	    
-	    /* les boutons pour ajouter les composants */
-	    
-	    JButton or1 = new JButton(new ImageIcon("image/or.jpg")),
-	            and1 = new JButton(new ImageIcon("image/et.png")),
-	            xor1 = new JButton(new ImageIcon("image/xor.png")),
-	            no1 = new JButton(new ImageIcon("image/no.png"))
-	    		liaison = new JButton(new ImageIcon("image/"));
+	    /* La Toolbar */
 
+	    JToolBar toolBar = new JToolBar(); 
+	    
+	    JButton orB = new JButton(new ImageIcon("image/ou1.png")),
+	            andB = new JButton(new ImageIcon("image/et1.png")),
+	            xorB = new JButton(new ImageIcon("image/xor1.png")),
+	            noB = new JButton(new ImageIcon("image/no1.png")),
+	    		liaisonB = new JButton(new ImageIcon("image/"));
+
+	    //Zone de Dessin des composants
+	    private JPanel drawPanel = new JPanel();
+	    
 	    
 	    public Fenetre() {
 	    	
@@ -63,14 +69,61 @@ public class Fenetre extends JFrame implements Runnable {
 	        /*On initialise le menu*/
 	        this.initMenu();
 	        
-	    }
-	    
-	    
-	    
+	        /*On initialise la Toolbar*/
+	        this.initToolbar();
+	        
+	        this.getContentPane().add(drawPanel,BorderLayout.CENTER);
+	        this.setVisible(true);
+	       
 
 	    }
-        public static void main(String[] args){
+        
+		private void initMenu() {
+        	
+        	fichier.add(nouveau);
+            fichier.addSeparator();
+            fichier.add(sauvegarder);
+            fichier.add(charger);
+            fichier.addSeparator();
+            fichier.add(lancer);
+            fichier.addSeparator();
+            fichier.add(quitter);
+            
+            composants.add(and);
+            composants.add(or);
+            composants.add(no);
+            composants.add(xor);
+            
+            aide.add(aideItem);
+            
+            menuBar.add(fichier);
+            menuBar.add(composants);
+            menuBar.add(aide);
+            
+            this.setJMenuBar(menuBar);
+			
+		}
+		
+		private void initToolbar() {
+			toolBar.add(orB);
+			toolBar.add(andB);
+			toolBar.add(xorB);
+			toolBar.add(noB);
+			toolBar.addSeparator();
+			toolBar.add(liaisonB);
+			
+			this.getContentPane().add(toolBar, BorderLayout.NORTH);
+			
+		}
+		
+		public static void main(String[] args){
         Fenetre fen = new Fenetre(); 
+		}
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
 		}
   
 
