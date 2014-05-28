@@ -1,15 +1,11 @@
-public class CompXOR extends Component {
+public class CompOR extends Component {
 
-	public CompXOR(String name) {
+	public CompOR(String name) {
 		super(name);
 	}
 
 	public boolean getOut() {
-		if (this.getInA() == this.getInB()) {
-			return false;
-		} else {
-			return true;
-		}
+		return (this.getInA() | this.getInB());
 	}
 
 }
