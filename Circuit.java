@@ -1,13 +1,18 @@
 	public class Circuit {
 
-		private static int ins = 0;
-		private static int outs = 0;
+		private static CompIN ins[] = new CompIN[10];
+		private static CompOUT outs[] = new CompOUT[10];
 		
 		private static CompOR compOrs[] = new CompOR[50];
 		private static CompAND compAnds[]= new CompAND[50];
 		private static CompNO compNos[]= new CompNO[50];
 		private static CompXOR compXors[]= new CompXOR[50];
-		private static CompLink compLinks[]= new CompLink[100];
+		
+		private static CompLinkIN compLinkIns[] = new CompLinkIN[50];
+		private static CompLinkAND compLinkAnds[] = new CompLinkAND[50];
+		private static CompLinkOR compLinkOrs[] = new CompLinkOR[50];
+		private static CompLinkXOR compLinkXors[] = new CompLinkXOR[50];
+		private static CompLinkNO compLinkNos[] = new CompLinkNO[50];
 		
 		private static FileReader fileReader;
 		
@@ -71,20 +76,27 @@
 	}
 
 	public static void afficherCircuit(){
-		System.out.println(ins);
-		System.out.println(outs);
 		for(int i = 0; i < 50; i++){
+			if(ins[i] != null){
+				System.out.println(ins[i].getName());
+			}
+			if(outs[i] != null){
+				System.out.println(outs[i].getName());
+			}
 			if(compOrs[i] != null){
-			System.out.println(compOrs[i].getName());
+				System.out.println(compOrs[i].getName());
 			}
 			if(compXors[i] != null){
-			System.out.println(compXors[i].getName());
+				System.out.println(compXors[i].getName());
 			}
 			if(compAnds[i] != null){
-			System.out.println(compAnds[i].getName());
+				System.out.println(compAnds[i].getName());
 			}
 			if(compNos[i] != null){
-			System.out.println(compNos[i].getName());
+				System.out.println(compNos[i].getName());
+			}
+			if(outs[i] != null){
+				System.out.println(outs[i].getInA());
 			}
 		}
 	}
@@ -96,7 +108,7 @@
 			creerComposant(c);
 		}
 		else if (motCommande.equals("liaison")){
-			//creerLiaison(c);
+			creerLiaison(c);
 		}
 	}
 	
@@ -104,10 +116,20 @@
 		String nomComposant = c.getMot2();
 		String typeComposant = c.getMot3();
 		if(typeComposant.equals("IN")){
-			ins += 1;
+			for(int i = 0; i < 10; i++){
+				if(ins[i] == null){
+					ins[i] = new CompIN(nomComposant);
+					return;
+				}
+			}
 		}
 		else if (typeComposant.equals("OUT")){
-			outs += 1;
+			for(int i = 0; i < 10; i++){
+				if(outs[i] == null){
+					outs[i] = new CompOUT(nomComposant);
+					return;
+				}
+			};
 		}
 		else if (typeComposant.equals("OR")){
 			for(int i = 0; i < 50; i++){
@@ -143,4 +165,130 @@
 		}
 	}
 	
+	private static void creerLiaison(Commande c) {
+		String composant1 = c.getMot2();
+		String entreeComp1 = c.getMot3();
+		String composant2 = c.getMot4();
+		String entreeComp2 = c.getMot5();
+		
+		int nbin = 1,nbor = 1, nband = 1, nbno = 1,nbxor = 1;
+		
+		
+		switch(composant1.charAt(0)){
+		   case 'i':
+			   for(int i = 0; i < 50; i++){
+					if(compLinkIns[i] == null){
+						CompIN inRech = rechercherIN(composant1);
+						if(inRech != null){
+						compLinkIns[i] = new CompLinkIN("link"+nbin,inRech);
+						nbin += 1;
+						break;
+						}
+					}
+				}
+			   break;
+		   case 'x':
+			   for(int i = 0; i < 50; i++){
+					if(compLinkXors[i] == null){
+						CompXOR inRech = rechercherXOR(composant1);
+						if(inRech != null){
+						compLinkXors[i] = new CompLinkXOR("link"+nbxor,inRech);
+						nbxor += 1;
+						break;
+						}
+					}
+				}
+			   break;
+		   case 'a':
+			   for(int i = 0; i < 50; i++){
+					if(compLinkAnds[i] == null){
+						CompAND inRech = rechercherAND(composant1);
+						if(inRech != null){
+						compLinkAnds[i] = new CompLinkAND("link"+nband,inRech);
+						nband += 1;
+						break;
+						}
+					}
+				}
+			   break;
+		   case 'n':
+			   for(int i = 0; i < 50; i++){
+					if(compLinkNos[i] == null){
+						CompNO inRech = rechercherNO(composant1);
+						if(inRech != null){
+						compLinkNos[i] = new CompLinkNO("link"+nbno,inRech);
+						nbno += 1;
+						break;
+						}
+					}
+				}
+			   break;
+		   case 'o':
+			   for(int i = 0; i < 50; i++){
+					if(compLinkOrs[i] == null){
+						CompOR inRech = rechercherOR(composant1);
+						if(inRech != null){
+						compLinkOrs[i] = new CompLinkOR("link"+nbor,inRech);
+						nbor += 1;
+						break;
+						}
+					}
+				}
+			   break;
+		   default:
+			   break;
+		}
+		
+		
+		
+		
 	}
+
+	private static CompIN rechercherIN(String s) {
+		for(int i = 0; i<10; i+=1){
+			if(ins[i].getName().equals(s)){
+				return ins[i];
+			}
+		}
+		return null;
+	}
+	
+
+	private static CompXOR rechercherXOR(String s) {
+		for(int i = 0; i<50; i+=1){
+			if(compXors[i].getName().equals(s)){
+				return compXors[i];
+			}
+		}
+		return null;
+	}
+	
+	private static CompAND rechercherAND(String s) {
+		for(int i = 0; i<50; i+=1){
+			if(compAnds[i].getName().equals(s)){
+				return compAnds[i];
+			}
+		}
+		return null;
+	}
+	
+	private static CompOR rechercherOR(String s) {
+		for(int i = 0; i<50; i+=1){
+			if(compOrs[i].getName().equals(s)){
+				return compOrs[i];
+			}
+		}
+		return null;
+	}
+	
+	private static CompNO rechercherNO(String s) {
+		for(int i = 0; i<50; i+=1){
+			if(compNos[i].getName().equals(s)){
+				return compNos[i];
+			}
+		}
+		return null;
+	}
+
+	
+}
