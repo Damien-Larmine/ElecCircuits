@@ -23,7 +23,7 @@ public class FileReader {
 		String mot5;
 
 		try{
-			InputStream ips=new FileInputStream(fichier); 
+			InputStream ips=new FileInputStream(s); 
 			InputStreamReader ipsr=new InputStreamReader(ips);
 			BufferedReader br=new BufferedReader(ipsr);
 			String ligne;
