@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.awt.Graphics;
   
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,23 +43,22 @@ public class Fenetre extends JFrame implements Runnable {
                 no = new JMenuItem("NO"),
                 aideItem = new JMenuItem("Aide");
 	    
-	    /* Les Ã©couteurs */ 
+	    /* Les ÃƒÂ©couteurs */ 
 	    
 	    //private Stoplistener sListener = new StopListener(); 
 	    
 	    /* La Toolbar */
 
-	    JToolBar toolBar = new JToolBar(); 
+	    JToolBar toolBar = new JToolBar(1); 
 	    
 	    JButton orB = new JButton(new ImageIcon("image/ou1.png")),
 	            andB = new JButton(new ImageIcon("image/et1.png")),
 	            xorB = new JButton(new ImageIcon("image/xor1.png")),
 	            noB = new JButton(new ImageIcon("image/no1.png")),
-	    		liaisonB = new JButton(new ImageIcon("image/"));
+	    	    liaisonB = new JButton(new ImageIcon("image/"));
 
 	    //Zone de Dessin des composants
-	    private JPanel drawPanel = new JPanel();
-	    
+	    private DrawPanel drawPanel = new DrawPanel();	    
 	    
 	    public Fenetre() {
 	    	
@@ -78,9 +78,9 @@ public class Fenetre extends JFrame implements Runnable {
 
 	    }
         
-		private void initMenu() {
+	   private void initMenu() {
         	
-        	fichier.add(nouveau);
+            fichier.add(nouveau);
             fichier.addSeparator();
             fichier.add(sauvegarder);
             fichier.add(charger);
@@ -102,27 +102,25 @@ public class Fenetre extends JFrame implements Runnable {
             
             this.setJMenuBar(menuBar);
 			
-		}
+	   }
 		
-		private void initToolbar() {
-			toolBar.add(orB);
-			toolBar.add(andB);
-			toolBar.add(xorB);
-			toolBar.add(noB);
-			toolBar.addSeparator();
-			toolBar.add(liaisonB);
+	  private void initToolbar() {
+	    toolBar.add(orB);
+	    toolBar.add(andB);
+	    toolBar.add(xorB);
+	    toolBar.add(noB);
+	    toolBar.addSeparator();
+	    toolBar.add(liaisonB);
 			
-			this.getContentPane().add(toolBar, BorderLayout.NORTH);
+	    this.getContentPane().add(toolBar, BorderLayout.WEST);
 			
-		}
+	  }
 		
 		public static void main(String[] args){
         Fenetre fen = new Fenetre(); 
 		}
-		
-		@Override
+
 		public void run() {
-			// TODO Auto-generated method stub
 			
 		}
   
