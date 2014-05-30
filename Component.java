@@ -31,7 +31,7 @@ public class Component {
 		this.inA = a;
 	}
 
-	public void setOuts(boolean b) {
+	public void setInB(boolean b) {
 		this.inB = b;
 	}
 }
