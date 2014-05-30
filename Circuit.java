@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-	public class Circuit {
+public class Circuit {
 
 		private static CompIN ins[] = new CompIN[5];
 		private static CompOUT outs[] = new CompOUT[5];
