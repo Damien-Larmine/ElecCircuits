@@ -1,14 +1,18 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 	public class Circuit {
 
-		private static CompIN ins[] = new CompIN[10];
-		private static CompOUT outs[] = new CompOUT[10];
+		private static CompIN ins[] = new CompIN[5];
+		private static CompOUT outs[] = new CompOUT[5];
 		
 		private static CompOR compOrs[] = new CompOR[50];
 		private static CompAND compAnds[]= new CompAND[50];
 		private static CompNO compNos[]= new CompNO[50];
 		private static CompXOR compXors[]= new CompXOR[50];
 		
-		private static CompLink compLink[] = new CompLink[100];
+		private static CompLink compLink[] = new CompLink[350];
 		
 		private static FileReader fileReader;
 		
@@ -17,7 +21,27 @@
 	public static void main(String args[]) {
 		
 		creerCircuit(args[0]);
-		afficherCircuit();
+		
+		int compteurAff = 0;
+		
+		for(int i = 0; i<5; i++){
+			compteurAff += 1;
+			if(ins[i] == null){
+				break;
+			}
+		}
+			switch(compteurAff){
+			case 2: afficherCircuit2(args[0]);
+				break;
+			case 3: afficherCircuit3(args[0]);
+				break;
+			case 4: afficherCircuit4(args[0]);
+				break;
+			case 5: afficherCircuit5(args[0]);
+				break;
+			
+			}
+		
 		}
 	
 	public static void creerCircuit(String s){
@@ -31,37 +55,237 @@
 		}
 	}
 
-	public static void afficherCircuit(){
-	System.out.println(" Entrees  | Sortie  ");
-	System.out.println("----------|--------");	
+	public static void afficherCircuit2(String nom){
+		
+		File f = new File (nom+".tdv");
+		
+		try
+		{
+		    FileWriter fw = new FileWriter (f);
+		 
+		    fw.write (" Entrees  | Sortie  ");
+		    fw.write ("----------|--------");
+		 
+		    for(int in1 = 0; in1 < 2; in1++){	
 
+		   	    if(in1 == 0){ins[0].setInA(false);}
+		   	    if(in1 == 1){ins[0].setInA(true);}
+			
+		   	    for(int in2 = 0; in2 < 2; in2++){
 
-	for(int j = 0; j < 2; j++){	
+			        if(in2 == 0){ins[1].setInA(false);}
+		   		    if(in2 == 1){ins[1].setInA(true);}
 
-   	    if(j == 0){ins[0].setInA(false);}
-   	    if(j == 1){ins[0].setInA(true);}
-	
-   	    for(int k = 0; k < 2; k++){
+				    for(int i=0; i<50; i++){
+			  	      if(compLink[i] != null){
+			   	      effectuerLiaison(compLink[i]);
+		              }
+				    }
+				    
+				    int aff1 = ins[0].getOut() == true ? 1 : 0;
+		       	    int aff2 = ins[1].getOut() == true ? 1 : 0;
+		       	    int affout = outs[0].getOut() == true ? 1 : 0;
 
-	        if(k == 0){ins[1].setInA(false);}
-   		if(k == 1){ins[1].setInA(true);}
+		       		fw.write("  "+aff1+" |  "+aff2+"  |   "+affout+"  ");
 
-		for(int i=0; i<50; i++){
-	  	  if(compLink[i] != null){
-	   	  effectuerLiaison(compLink[i]);
-          	  }
+			    }
+
+			}    
+		        
+		    fw.close();
 		}
-		   int x = ins[0].getOut() == true ? 1 : 0;
-       		   int y = ins[1].getOut() == true ? 1 : 0;
-       		   int z = outs[0].getOut() == true ? 1 : 0;
-
-       		   System.out.println("  "+x+" |  "+y+"  |   "+z+"  ");
-
-	    }
-
-	}
+		catch (IOException exception)
+		{
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		}
+		
 	
 }
+	
+	public static void afficherCircuit3(String nom){
+		
+		File f = new File (nom+".tdv");
+		
+		try
+		{
+		    FileWriter fw = new FileWriter (f);
+		 
+		    fw.write ("    Entrees    |   Sortie  ");
+		    fw.write ("---------------|----------");
+		 
+		    for(int in1 = 0; in1 < 2; in1++){	
+
+		    	if(in1 == 0){ins[0].setInA(false);}
+		   	    if(in1 == 1){ins[0].setInA(true);}
+		   	    	
+		   	    for(int in2 = 0; in2 < 2; in2++){
+		   	    	
+		   	    	if(in2 == 0){ins[1].setInA(false);}
+		   		    if(in2 == 1){ins[1].setInA(true);}
+
+		   		 for(int in3 = 0; in3 < 2; in3++){
+
+				        if(in3 == 0){ins[2].setInA(false);}
+			   		    if(in3 == 1){ins[2].setInA(true);}
+		   		    
+			   		    for(int i=0; i<50; i++){
+			   		    	if(compLink[i] != null){
+			   		    		effectuerLiaison(compLink[i]);
+			   		    	}
+			   		    }
+				    
+				    int aff1 = ins[0].getOut() == true ? 1 : 0;
+		       	    int aff2 = ins[1].getOut() == true ? 1 : 0;
+		       	    int aff3 = ins[2].getOut() == true ? 1 : 0;
+		       	    int affout = outs[0].getOut() == true ? 1 : 0;
+
+		       		fw.write("  "+aff1+" |  "+aff2+"  |  "+aff3+"  |   "+affout+"  ");
+
+		   		 }
+		   	    }
+
+			}    
+		        
+		    fw.close();
+		}
+		catch (IOException exception)
+		{
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		}
+		
+	
+}
+	
+	
+	public static void afficherCircuit4(String nom){
+		
+		File f = new File (nom+".tdv");
+		
+		try
+		{
+		    FileWriter fw = new FileWriter (f);
+		 
+		    fw.write ("     Entrees     |   Sortie  ");
+		    fw.write ("-----------------|----------");
+		 
+		    for(int in1 = 0; in1 < 2; in1++){	
+
+		    	if(in1 == 0){ins[0].setInA(false);}
+		   	    if(in1 == 1){ins[0].setInA(true);}
+		   	    	
+		   	    for(int in2 = 0; in2 < 2; in2++){
+		   	    	
+		   	    	if(in2 == 0){ins[1].setInA(false);}
+		   		    if(in2 == 1){ins[1].setInA(true);}
+
+		   		 for(int in3 = 0; in3 < 2; in3++){
+
+				        if(in3 == 0){ins[2].setInA(false);}
+			   		    if(in3 == 1){ins[2].setInA(true);}
+			   		    
+			   		 for(int in4 = 0; in4 < 2; in4++){
+
+					        if(in4 == 0){ins[3].setInA(false);}
+				   		    if(in4 == 1){ins[3].setInA(true);}
+		   		    
+				   		    for(int i=0; i<50; i++){
+				   		    	if(compLink[i] != null){
+				   		    		effectuerLiaison(compLink[i]);
+				   		    	}
+				   		    }
+				    
+				   		    int aff1 = ins[0].getOut() == true ? 1 : 0;
+				   		    int aff2 = ins[1].getOut() == true ? 1 : 0;
+				   		    int aff3 = ins[2].getOut() == true ? 1 : 0;
+				   		    int aff4 = ins[3].getOut() == true ? 1 : 0;
+				   		    int affout = outs[0].getOut() == true ? 1 : 0;
+
+				   		    fw.write("  "+aff1+" |  "+aff2+"  |  "+aff3+"  |  "+aff4+"  |   "+affout+"  ");
+			   		 }
+		   		 }
+		   	    }
+		   	    
+		    }    
+		        
+		    fw.close();
+		}
+		catch (IOException exception)
+		{
+		    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+		}
+		
+	
+}
+	
+	
+	public static void afficherCircuit5(String nom){
+		
+		File f = new File (nom+".tdv");
+		
+		try
+		{
+		    FileWriter fw = new FileWriter (f);
+		 
+		    fw.write ("       Entrees       |   Sortie  ");
+		    fw.write ("---------------------|----------");
+		 
+		    for(int in1 = 0; in1 < 2; in1++){	
+
+		    	if(in1 == 0){ins[0].setInA(false);}
+		   	    if(in1 == 1){ins[0].setInA(true);}
+		   	    	
+		   	    for(int in2 = 0; in2 < 2; in2++){
+		   	    	
+		   	    	if(in2 == 0){ins[1].setInA(false);}
+		   		    if(in2 == 1){ins[1].setInA(true);}
+
+		   		 for(int in3 = 0; in3 < 2; in3++){
+
+				        if(in3 == 0){ins[2].setInA(false);}
+			   		    if(in3 == 1){ins[2].setInA(true);}
+			   		    
+			   		 for(int in4 = 0; in4 < 2; in4++){
+
+					        if(in4 == 0){ins[3].setInA(false);}
+				   		    if(in4 == 1){ins[3].setInA(true);}
+				   		    
+				   		    for(int in5 = 0; in5 < 2; in5++){
+
+				   		    	if(in5 == 0){ins[4].setInA(false);}
+					   		    if(in5 == 1){ins[4].setInA(true);}
+					   		    
+					   		    for(int i=0; i<50; i++){
+					   		    	if(compLink[i] != null){
+					   		    		effectuerLiaison(compLink[i]);
+					   		    	}
+					   		    }
+				    
+					   		    int aff1 = ins[0].getOut() == true ? 1 : 0;
+					   		    int aff2 = ins[1].getOut() == true ? 1 : 0;
+					   		    int aff3 = ins[2].getOut() == true ? 1 : 0;
+					   		    int aff4 = ins[3].getOut() == true ? 1 : 0;
+					   		    int aff5 = ins[4].getOut() == true ? 1 : 0;
+					   		    int affout = outs[0].getOut() == true ? 1 : 0;
+
+				   		    fw.write("  "+aff1+" |  "+aff2+"  |  "+aff3+"  |  "+aff4+"  |  "+aff5+"  |  "+affout+"  ");
+				   		    }
+				   		    
+			   		 }
+		   		 }
+		   	    }
+		   	    
+		    }    
+		        
+			    fw.close();
+			}
+		catch (IOException exception)
+		{
+			    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+			}
+		
+		
+}
+	
 	public static void traiterCommande(Commande c){
 
 		String motCommande = c.getMotCommande();
@@ -70,6 +294,9 @@
 		}
 		else if (motCommande.equals("liaison")){
 			creerLiaison(c);
+		}
+		else{
+			
 		}
 	}
 	
